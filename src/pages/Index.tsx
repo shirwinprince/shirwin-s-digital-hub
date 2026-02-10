@@ -5,10 +5,12 @@ import ProjectCards from "@/components/ProjectCards";
 import CertificationsCard from "@/components/CertificationsCard";
 import ContactCard from "@/components/ContactCard";
 import ChatBot from "@/components/ChatBot";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background px-4 py-12 md:py-20">
+    <div className="min-h-screen bg-background px-4 py-12 md:py-20 transition-colors duration-500">
+      <ThemeToggle />
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Hero - spans 2 cols and 2 rows */}

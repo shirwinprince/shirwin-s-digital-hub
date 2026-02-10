@@ -1,44 +1,88 @@
 import BentoCard from "./BentoCard";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const techStack = [
-  { name: "Python", icon: "🐍", level: 90 },
-  { name: "SQL", icon: "🗄️", level: 80 },
-  { name: "Pandas", icon: "🐼", level: 85 },
-  { name: "NumPy", icon: "🔢", level: 80 },
-  { name: "Matplotlib", icon: "📊", level: 75 },
-  { name: "Seaborn", icon: "📈", level: 70 },
-  { name: "Power BI", icon: "📉", level: 85 },
-  { name: "DAX", icon: "⚡", level: 75 },
-  { name: "Streamlit", icon: "🚀", level: 80 },
-  { name: "Azure AI", icon: "☁️", level: 65 },
+  { name: "Python", icon: "🐍", level: 95 },
+  { name: "SQL", icon: "🗄️", level: 85 },
+  { name: "Pandas", icon: "🐼", level: 88 },
+  { name: "NumPy", icon: "🔢", level: 85 },
+  { name: "Scikit-Learn", icon: "🧠", level: 90 },
+  { name: "Power BI", icon: "📊", level: 85 },
+  { name: "Streamlit", icon: "🚀", level: 82 },
+  { name: "Azure AI", icon: "☁️", level: 70 },
 ];
 
+const ProgressRing = ({ level, size = 52, stroke = 4 }: { level: number; size?: number; stroke?: number }) => {
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (level / 100) * circumference;
+
+  return (
+    <svg width={size} height={size} className="transform -rotate-90">
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="hsl(var(--muted))"
+        strokeWidth={stroke}
+      />
+      <motion.circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="url(#ringGradient)"
+        strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeDasharray={circumference}
+        initial={{ strokeDashoffset: circumference }}
+        animate={{ strokeDashoffset: offset }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+      />
+      <defs>
+        <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="hsl(var(--primary))" />
+          <stop offset="100%" stopColor="hsl(var(--secondary))" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+};
+
 const TechStackCard = () => {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   return (
     <BentoCard className="md:col-span-2" delay={0.1}>
-      <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-5">Tech Stack</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {techStack.map((tech, i) => (
-          <div key={tech.name} className="group flex items-center gap-3">
-            <div className="tech-icon !p-2 shrink-0">
-              <span className="text-base">{tech.icon}</span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs font-medium text-foreground">{tech.name}</span>
-                <span className="text-[10px] font-mono text-muted-foreground">{tech.level}%</span>
-              </div>
-              <div className="progress-bar">
-                <motion.div
-                  className="progress-bar-fill"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${tech.level}%` }}
-                  transition={{ duration: 1, delay: 0.3 + i * 0.08, ease: "easeOut" }}
-                />
+      <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-5">
+        Tech Stack & Skill Levels
+      </h2>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {techStack.map((tech) => (
+          <motion.div
+            key={tech.name}
+            onHoverStart={() => setHovered(tech.name)}
+            onHoverEnd={() => setHovered(null)}
+            className="flex flex-col items-center gap-2 group"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="relative">
+              <ProgressRing level={hovered === tech.name ? tech.level : tech.level} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-lg">{tech.icon}</span>
               </div>
             </div>
-          </div>
+            <span className="text-xs font-medium text-foreground text-center">{tech.name}</span>
+            <motion.span
+              className="text-[10px] font-mono text-primary"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: hovered === tech.name ? 1 : 0.6 }}
+            >
+              {tech.level}%
+            </motion.span>
+          </motion.div>
         ))}
       </div>
     </BentoCard>

@@ -1,19 +1,29 @@
 import BentoCard from "./BentoCard";
 import profileImg from "@/assets/profile-placeholder.jpg";
-import { MapPin, Download } from "lucide-react";
+import { MapPin, Download, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const HeroCard = () => {
   return (
     <BentoCard className="flex flex-col justify-between min-h-[350px] h-full" delay={0}>
       <div>
-        <span className="tag mb-4">Available for opportunities</span>
-        <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          Hi, I'm <span className="glow-text">Shirwin Prince I</span>
+        <motion.span
+          className="tag mb-4"
+          animate={{ opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Available for opportunities
+        </motion.span>
+        <h1
+          className="text-4xl md:text-5xl font-bold mt-4 leading-tight"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
+          Hey, I'm <span className="glow-text">Shirwin Prince I</span> 👋
         </h1>
         <p className="text-muted-foreground mt-4 text-lg leading-relaxed max-w-lg">
-          Machine Learning enthusiast and Software Developer from India, focused on building smart and scalable applications.
+          Machine Learning Specialist & Software Developer focused on AI-driven solutions.
         </p>
-        <div className="flex items-center gap-4 mt-4">
+        <div className="flex items-center gap-4 mt-5">
           <div className="flex items-center gap-2 text-muted-foreground text-sm">
             <MapPin size={14} />
             <span>India</span>
@@ -21,10 +31,11 @@ const HeroCard = () => {
           <a
             href="/resume.pdf"
             download
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium border border-primary/20 hover:bg-primary/20 hover:border-primary/40 transition-all"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:shadow-lg hover:shadow-primary/25 transition-all"
           >
-            <Download size={14} />
-            Resume
+            <Download size={15} />
+            Download CV
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>

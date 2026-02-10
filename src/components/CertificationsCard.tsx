@@ -1,10 +1,11 @@
 import BentoCard from "./BentoCard";
-import { Award } from "lucide-react";
+import { Award, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const certs = [
-  "Python for Data Science — IBM / Coursera",
-  "Generative AI Assistants",
-  "Microsoft Azure AI Fundamentals (AI-900)",
+  { name: "Azure AI Fundamentals", badge: "AI-900", org: "Microsoft", color: "from-primary to-secondary" },
+  { name: "Generative AI Assistants", badge: "GenAI", org: "Certified", color: "from-secondary to-primary" },
+  { name: "Python for Data Science", badge: "Python", org: "IBM / Coursera", color: "from-primary to-accent" },
 ];
 
 const CertificationsCard = () => {
@@ -14,14 +15,25 @@ const CertificationsCard = () => {
         <Award size={16} className="text-primary" />
         <h2 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Certifications</h2>
       </div>
-      <ul className="space-y-3">
-        {certs.map((cert) => (
-          <li key={cert} className="flex items-start gap-2">
-            <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-            <span className="text-sm text-foreground">{cert}</span>
-          </li>
+      <div className="space-y-3">
+        {certs.map((cert, i) => (
+          <motion.div
+            key={cert.name}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 + i * 0.1 }}
+            className="group flex items-center gap-3 p-2 rounded-xl hover:bg-muted/40 transition-colors"
+          >
+            <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${cert.color} flex items-center justify-center shrink-0`}>
+              <span className="text-[10px] font-bold text-primary-foreground">{cert.badge}</span>
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">{cert.name}</p>
+              <p className="text-[11px] text-muted-foreground">{cert.org}</p>
+            </div>
+          </motion.div>
         ))}
-      </ul>
+      </div>
     </BentoCard>
   );
 };

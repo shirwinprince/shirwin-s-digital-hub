@@ -2,10 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
+    --background: 210 20% 96%;
+    --foreground: 220 20% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 60% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 15% 90%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 217 91% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 217 91% 55%;
+
+    --radius: 1rem;
+
+    --glow-blue: 217 91% 55%;
+    --glow-purple: 260 60% 55%;
+    --card-glass: 0 0% 100%;
+    --card-border: 210 15% 85%;
+  }
+
+  .dark {
     --background: 0 0% 4%;
     --foreground: 0 0% 95%;
 
@@ -34,8 +71,6 @@
     --input: 0 0% 14%;
     --ring: 217 91% 60%;
 
-    --radius: 1rem;
-
     --glow-blue: 217 91% 60%;
     --glow-purple: 260 60% 55%;
     --card-glass: 0 0% 8%;
@@ -50,7 +85,7 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
   }
 
   code, .font-mono {
@@ -60,7 +95,13 @@
 
 @layer components {
   .bento-card {
-    @apply relative rounded-2xl border border-card-border bg-card/60 backdrop-blur-xl overflow-hidden transition-all duration-500;
+    @apply relative rounded-2xl border border-card-border overflow-hidden transition-all duration-500;
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(20px);
+  }
+
+  .dark .bento-card {
+    background: hsl(var(--card) / 0.6);
   }
 
   .bento-card::before {
@@ -68,7 +109,7 @@
     @apply absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 pointer-events-none;
     background: radial-gradient(
       600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      hsl(217 91% 60% / 0.08),
+      hsl(var(--primary) / 0.08),
       transparent 40%
     );
   }
@@ -78,28 +119,28 @@
   }
 
   .bento-card:hover {
-    border-color: hsl(217 91% 60% / 0.3);
-    box-shadow: 0 0 30px -10px hsl(217 91% 60% / 0.2);
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 30px -10px hsl(var(--primary) / 0.2);
   }
 
   .glow-text {
-    background: linear-gradient(135deg, hsl(217 91% 60%), hsl(260 60% 65%));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .glow-border {
-    border: 1px solid hsl(217 91% 60% / 0.2);
+    border: 1px solid hsl(var(--primary) / 0.2);
   }
 
   .glow-border:hover {
-    border-color: hsl(217 91% 60% / 0.5);
-    box-shadow: 0 0 20px -5px hsl(217 91% 60% / 0.3);
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.3);
   }
 
   .profile-glow {
-    box-shadow: 0 0 40px 10px hsl(217 91% 60% / 0.25), 0 0 80px 20px hsl(260 60% 55% / 0.1);
+    box-shadow: 0 0 40px 10px hsl(var(--primary) / 0.25), 0 0 80px 20px hsl(var(--secondary) / 0.1);
   }
 
   .tech-icon {
@@ -108,10 +149,19 @@
 
   .tech-icon:hover {
     @apply bg-muted border-primary/30 scale-110;
-    box-shadow: 0 0 15px -3px hsl(217 91% 60% / 0.3);
+    box-shadow: 0 0 15px -3px hsl(var(--primary) / 0.3);
   }
 
   .tag {
     @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium bg-primary/10 text-primary border border-primary/20;
+  }
+
+  .progress-bar {
+    @apply h-2 rounded-full overflow-hidden bg-muted;
+  }
+
+  .progress-bar-fill {
+    @apply h-full rounded-full transition-all duration-1000 ease-out;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
   }
 }

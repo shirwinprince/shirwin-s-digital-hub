@@ -4,6 +4,7 @@ import { ExperienceCard, EducationCard } from "@/components/ExperienceEducation"
 import ProjectCards from "@/components/ProjectCards";
 import CertificationsCard from "@/components/CertificationsCard";
 import ContactCard from "@/components/ContactCard";
+import ChatBot from "@/components/ChatBot";
 
 const Index = () => {
   return (
@@ -46,6 +47,8 @@ const Index = () => {
           © 2024 Shirwin Prince I. Built with passion.
         </p>
       </div>
+
+      <ChatBot />
     </div>
   );
 };

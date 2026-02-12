@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
 import HeroCard from "@/components/HeroCard";
 import TechStackCard from "@/components/TechStackCard";
 import { ExperienceCard, EducationCard } from "@/components/ExperienceEducation";
@@ -9,51 +11,84 @@ import ThemeToggle from "@/components/ThemeToggle";
 import FluidCursor from "@/components/FluidCursor";
 import CustomCursor from "@/components/CustomCursor";
 import GitHubActivityCard from "@/components/GitHubActivityCard";
+import Preloader from "@/components/Preloader";
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" as const },
+  }),
+};
 
 const Index = () => {
+  const [loaded, setLoaded] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("preloaded") === "true";
+    }
+    return false;
+  });
+
+  const handlePreloaderComplete = () => {
+    setLoaded(true);
+    sessionStorage.setItem("preloaded", "true");
+  };
+
   return (
     <div className="min-h-screen bg-background relative transition-colors duration-500">
       <FluidCursor />
       <CustomCursor />
+
+      {!loaded && <Preloader onComplete={handlePreloaderComplete} />}
+
       <ThemeToggle />
 
       <div className="relative z-10 px-4 py-12 md:py-20">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+            initial="hidden"
+            animate={loaded ? "visible" : "hidden"}
+          >
             {/* Hero - spans 2 cols and 2 rows */}
-            <div className="md:col-span-2 lg:col-span-2 lg:row-span-2">
+            <motion.div className="md:col-span-2 lg:col-span-2 lg:row-span-2" custom={0} variants={cardVariants}>
               <HeroCard />
-            </div>
+            </motion.div>
 
             {/* Experience */}
-            <div className="lg:col-span-1">
+            <motion.div className="lg:col-span-1" custom={1} variants={cardVariants}>
               <ExperienceCard />
-            </div>
+            </motion.div>
 
             {/* Education */}
-            <div className="lg:col-span-1">
+            <motion.div className="lg:col-span-1" custom={2} variants={cardVariants}>
               <EducationCard />
-            </div>
+            </motion.div>
 
             {/* Tech Stack - wide */}
-            <div className="md:col-span-2">
+            <motion.div className="md:col-span-2" custom={3} variants={cardVariants}>
               <TechStackCard />
-            </div>
+            </motion.div>
 
             {/* Projects */}
-            <ProjectCards />
+            <motion.div custom={4} variants={cardVariants}><ProjectCards /></motion.div>
 
             {/* GitHub Activity */}
-            <GitHubActivityCard />
+            <motion.div custom={5} variants={cardVariants} className="md:col-span-2">
+              <GitHubActivityCard />
+            </motion.div>
 
             {/* Certifications */}
-            <CertificationsCard />
+            <motion.div custom={6} variants={cardVariants}>
+              <CertificationsCard />
+            </motion.div>
 
             {/* Contact - wide */}
-            <div className="md:col-span-2 lg:col-span-4">
+            <motion.div className="md:col-span-2 lg:col-span-4" custom={7} variants={cardVariants}>
               <ContactCard />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <p className="text-center text-muted-foreground text-xs mt-12">
             © 2024 Shirwin Prince I. Built with passion.

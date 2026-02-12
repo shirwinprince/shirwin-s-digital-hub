@@ -8,6 +8,7 @@ import ChatBot from "@/components/ChatBot";
 import ThemeToggle from "@/components/ThemeToggle";
 import FluidCursor from "@/components/FluidCursor";
 import CustomCursor from "@/components/CustomCursor";
+import GitHubActivityCard from "@/components/GitHubActivityCard";
 
 const Index = () => {
   return (
@@ -41,6 +42,9 @@ const Index = () => {
 
             {/* Projects */}
             <ProjectCards />
+
+            {/* GitHub Activity */}
+            <GitHubActivityCard />
 
             {/* Certifications */}
             <CertificationsCard />

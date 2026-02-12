@@ -7,6 +7,7 @@ const projects = [
     desc: "CNN-based deep learning system for automated X-ray fracture analysis.",
     icon: Brain,
     tags: ["Deep Learning", "CNN", "Medical AI"],
+    badge: "Deep Learning",
     delay: 0.3,
   },
   {
@@ -14,6 +15,7 @@ const projects = [
     desc: "ML predictive pricing model with an interactive Streamlit interface.",
     icon: BarChart3,
     tags: ["ML", "Streamlit", "Prediction"],
+    badge: "Streamlit",
     delay: 0.35,
   },
   {
@@ -21,6 +23,7 @@ const projects = [
     desc: "Classification model for clinical cancer recurrence risk assessment.",
     icon: HeartPulse,
     tags: ["Classification", "Healthcare"],
+    badge: "Healthcare AI",
     delay: 0.4,
   },
   {
@@ -28,6 +31,7 @@ const projects = [
     desc: "Unsupervised ML using K-Means & DBSCAN for inventory optimization.",
     icon: Package,
     tags: ["K-Means", "DBSCAN", "Clustering"],
+    badge: "Unsupervised ML",
     delay: 0.45,
   },
   {
@@ -35,6 +39,7 @@ const projects = [
     desc: "Interactive Power BI dashboard with advanced DAX analytics.",
     icon: UtensilsCrossed,
     tags: ["Power BI", "DAX", "Analytics"],
+    badge: "Power BI",
     delay: 0.5,
   },
 ];
@@ -51,7 +56,10 @@ const ProjectCards = () => {
             <h3 className="font-semibold text-foreground text-sm">{project.title}</h3>
           </div>
           <p className="text-muted-foreground text-sm leading-relaxed">{project.desc}</p>
-          <div className="flex flex-wrap gap-1.5 mt-3">
+          <div className="flex flex-wrap gap-1.5 mt-3 items-center">
+            <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/20">
+              {project.badge}
+            </span>
             {project.tags.map((tag) => (
               <span key={tag} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
                 {tag}

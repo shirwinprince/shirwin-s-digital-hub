@@ -95,13 +95,16 @@
 
 @layer components {
   .bento-card {
-    @apply relative rounded-2xl border border-card-border overflow-hidden transition-all duration-500;
+    @apply relative rounded-2xl overflow-hidden transition-all duration-500;
     background: hsl(var(--card) / 0.6);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--card-border));
   }
 
   .dark .bento-card {
     background: hsl(var(--card) / 0.6);
+    border-color: hsl(0 0% 100% / 0.1);
   }
 
   .bento-card::before {

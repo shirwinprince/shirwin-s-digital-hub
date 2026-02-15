@@ -1,7 +1,16 @@
 import BentoCard from "./BentoCard";
-import { Brain, BarChart3, HeartPulse, Package, UtensilsCrossed } from "lucide-react";
+import { Brain, BarChart3, HeartPulse, Package, UtensilsCrossed, LucideIcon } from "lucide-react";
 
-const projects = [
+export interface ProjectData {
+  title: string;
+  desc: string;
+  icon: LucideIcon;
+  tags: string[];
+  badge: string;
+  delay: number;
+}
+
+export const projects: ProjectData[] = [
   {
     title: "Bone Fracture Detection",
     desc: "CNN-based deep learning system for automated X-ray fracture analysis.",
@@ -44,32 +53,34 @@ const projects = [
   },
 ];
 
-const ProjectCards = () => {
-  return (
-    <>
-      {projects.map((project) => (
-        <BentoCard key={project.title} delay={project.delay} className="group">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-              <project.icon size={18} />
-            </div>
-            <h3 className="font-semibold text-foreground text-sm">{project.title}</h3>
-          </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">{project.desc}</p>
-          <div className="flex flex-wrap gap-1.5 mt-3 items-center">
-            <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/20">
-              {project.badge}
-            </span>
-            {project.tags.map((tag) => (
-              <span key={tag} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </BentoCard>
+export const ProjectCard = ({ project }: { project: ProjectData }) => (
+  <BentoCard className="group h-full">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+        <project.icon size={18} />
+      </div>
+      <h3 className="font-semibold text-foreground text-sm">{project.title}</h3>
+    </div>
+    <p className="text-muted-foreground text-sm leading-relaxed">{project.desc}</p>
+    <div className="flex flex-wrap gap-1.5 mt-3 items-center">
+      <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border border-primary/20">
+        {project.badge}
+      </span>
+      {project.tags.map((tag) => (
+        <span key={tag} className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+          {tag}
+        </span>
       ))}
-    </>
-  );
-};
+    </div>
+  </BentoCard>
+);
+
+const ProjectCards = () => (
+  <>
+    {projects.map((project) => (
+      <ProjectCard key={project.title} project={project} />
+    ))}
+  </>
+);
 
 export default ProjectCards;

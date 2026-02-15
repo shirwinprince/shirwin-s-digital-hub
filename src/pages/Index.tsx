@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import HeroCard from "@/components/HeroCard";
 import TechStackCard from "@/components/TechStackCard";
 import { ExperienceCard, EducationCard } from "@/components/ExperienceEducation";
-import ProjectCards from "@/components/ProjectCards";
+import { projects, ProjectCard } from "@/components/ProjectCards";
 import CertificationsCard from "@/components/CertificationsCard";
 import ContactCard from "@/components/ContactCard";
 import ChatBot from "@/components/ChatBot";
@@ -71,21 +71,25 @@ const Index = () => {
               <TechStackCard />
             </motion.div>
 
-            {/* Projects */}
-            <motion.div custom={4} variants={cardVariants}><ProjectCards /></motion.div>
+            {/* Projects - each as individual grid item */}
+            {projects.map((project, i) => (
+              <motion.div key={project.title} custom={4 + i} variants={cardVariants}>
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
 
             {/* GitHub Activity */}
-            <motion.div custom={5} variants={cardVariants} className="md:col-span-2">
+            <motion.div custom={9} variants={cardVariants} className="md:col-span-2">
               <GitHubActivityCard />
             </motion.div>
 
             {/* Certifications */}
-            <motion.div custom={6} variants={cardVariants}>
+            <motion.div custom={10} variants={cardVariants}>
               <CertificationsCard />
             </motion.div>
 
             {/* Contact - wide */}
-            <motion.div className="md:col-span-2 lg:col-span-4" custom={7} variants={cardVariants}>
+            <motion.div className="md:col-span-2 lg:col-span-4" custom={11} variants={cardVariants}>
               <ContactCard />
             </motion.div>
           </motion.div>
